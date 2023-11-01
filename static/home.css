@@ -1,0 +1,130 @@
+/* Reset some default styles */
+body, h1, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Style the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Style the header */
+header {
+    background-image: url('../static/bg-header.jpg');
+    background-size: cover;
+    color: #2ee297;
+    text-align: center;
+    padding: 150px 0;
+    height: 300px;
+    text-align: left;
+    padding: 100px 30px 200px 100px;
+}
+
+/* Style the heading */
+h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+/* Style the call-to-action button */
+.cta-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #0056b3;
+}
+
+/* Style the navigation menu */
+nav ul {
+    background-color: rgba(0, 0, 0, 0.8);
+    list-style: none;
+    text-align: center;
+    padding: 10px;
+}
+
+nav li {
+    display: inline;
+    margin: 0 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Style the main content */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+/* Style sections */
+.featured {
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.featured h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.featured ul {
+    list-style: none;
+    margin-left: 20px;
+}
+
+.featured ul li {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #555;
+}
+
+/* Style the testimonial section */
+.testimonial {
+    background-color: #f9f9f9;
+    padding: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.testimonial h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.testimonial-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.testimonial-card p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.testimonial-card .author {
+    font-style: italic;
+    color: #777;
+}
