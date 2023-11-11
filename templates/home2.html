@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to NutriWise</title>
+    <link rel="stylesheet" href="../static/home.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to NutriWise, {{ username }}!</h1>
+        <p>Your Personalized Nutrition Companion</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home2_page') }}">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Reviews</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h2>Welcome, {{ username }}!</h2>
+
+        <!-- Search Form -->
+        <form method="POST" action="{{ url_for('home2_page') }}">
+            <label for="search_query">Search for Grocery Item:</label>
+            <input type="text" id="search_query" name="search_query" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Display Search Results -->
+        {% if result %}
+            <p>Calories for {{ result.name }}: {{ result.calories }}</p>
+        {% elif error %}
+            <p>{{ error }}</p>
+        {% endif %}
+    </main>
+    <section class="chatbot">
+        <h2>Chat with NutriWise Assistant</h2>
+        <!-- Add your chatbot interface here -->
+        <div id="chatbot-container">
+            <!-- Your chatbot UI goes here -->
+        </div>
+    </section>
+    <!-- Other content goes here -->
+    <footer>
+        &copy; 2023 NutriWise - Your Nutrition Companion
+    </footer>
+</body>
+</html>
