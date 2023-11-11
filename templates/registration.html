@@ -1,0 +1,38 @@
+<!-- registration.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - NutriWise</title>
+    <link rel="stylesheet" href="../static/registration.css">
+</head>
+<body>
+    <div class="registration-container">
+        <h2>Register for NutriWise</h2>
+        <form action="{{ url_for('registration_page') }}" method="post">
+            <!-- Name Input -->
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <!-- Email Input -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <!-- Username Input -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <!-- Password Input -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <!-- Submit Button -->
+            <input type="submit" value="Register">
+        </form>
+
+        <!-- Login Link -->
+        <p>Already registered? <a href="{{ url_for('login_page') }}">Login here</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - NutriWise</title>
+    <link rel="stylesheet" href="../static/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login to NutriWise</h2>
+        <form action="{{ url_for('login_page') }}" method="post">
+            <!-- Username Input -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <!-- Password Input -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <!-- Submit Button -->
+            <input type="submit" value="Login">
+        </form>
+
+        <!-- Registration Link -->
+        <p>Not registered? <a href="{{ url_for('registration_page') }}">Register here</a></p>
+    </div>
+</body>
+</html>

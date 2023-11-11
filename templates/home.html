@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NutriWise - Your Nutrition Companion</title>
-    <link rel="stylesheet" href="static/home.css">
+    <link rel="stylesheet" href="..\static\home.css">
 </head>
 <body>
     <header>
@@ -12,27 +12,27 @@
         <p>Your Personalized Nutrition Companion</p>
         <br>
         <br>
-        <a href="#" class="cta-button">Get Started</a>
+        <a href="{{ url_for('login_page') }}" class="cta-button">Get Started</a>
     </header>
     <nav>
         <ul>
-            <li><a href="#">Home</a></li>
+            <li><a href="{{ url_for('main_page') }}">Home</a></li>
             <li><a href="#">Features</a></li>
             <li><a href="#">About Us</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
-    </nav>
+    </nav>  
     <main>
         <section class="featured">
             <h2>Key Features</h2>
             <ul>
-                <li>Nutrition Analysis</li>
-                <li>Food Swaps</li>
-                <li>Expense Tracking</li>
-                <li>Nutritional Contents</li>
-                <li>BMI Calculator</li>
-                <li>Health Tips</li>
-                <li>Personalized Menu Suggestions</li>
+                <li><a href="#">Nutrition Analysis</a></li>
+                <li><a href="#">Food Swaps</a></li>
+                <li><a href="#">Expense Tracking</a></li>
+                <li><a href="#">Nutritional Contents</a></li>
+                <li><a href="{{ url_for('bmi_page') }}">BMI Calculator</a></li> 
+                <li><a href="#">Health Tips</a></li>
+                <li><a href="#">Personalized Menu Suggestions</a></li>
             </ul>
             <a href="#" class="cta-button">Get Started</a>
         </section>
@@ -49,3 +49,4 @@
     </footer>
 </body>
 </html>
+
