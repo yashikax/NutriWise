@@ -35,12 +35,15 @@
             <label for="item_dropdown">Select Item:</label>
             <select id="item_dropdown" name="item_dropdown">
                 {% for item, calories, category in result %}
-                {% if category == "Common" %}
-                    <option value="{{ item }}" data-category="{{ category }}">{{ item }}</option>
-                {% endif %}
+                <option value="{{ item }}" data-category="{{ category }}" data-nix-item-id="{{ nix_item_id }}">{{ item }} ({{ category }})</option>
                 {% endfor %}
             </select>
-            
+            <button type="button" onclick="getCalories()">Get Calories</button>
+            <div id="calories_result">
+                {% if selected_item %}
+                    <p>Calories for {{ selected_item.name }} ({{ category }}): {{ selected_item.calories }}</p>
+                {% endif %}
+            </div>
             <button type="button" onclick="getNutritionInfo()">Get Nutrition Info</button>
             <div id="nutrition_info_result" style="display: none;">
                 <p id="nutrition_info_text"></p>
@@ -54,12 +57,59 @@
             <script>
                 var resultData = {{ result | tojson }};
                 var selected_item = null;
+                function getCalories() {
+                    var selectedFood = document.getElementById("item_dropdown").value;
+                    var selectedResult = resultData.find(item => item[0] === selectedFood);
+                    if (selectedResult) {
+                        console.log('Length of the first item:', selectedResult.length);
+                    } else {
+                        console.log('No items in the result array');
+                    }
+                    if (selectedResult) {
+                        var caloriesResult = "<p>Calories for " + selectedResult[0] + " (" + selectedResult[2] + "): " + selectedResult[1] + "</p>";
+                        document.getElementById("calories_result").innerHTML = caloriesResult;
+                    } else {
+                        document.getElementById("calories_result").innerHTML = "<p>No data available for the selected item.</p>";
+                    }
+                }
 
                 function getNutritionInfo() {
-                    
                     var selectedFood = document.getElementById("item_dropdown").value;
                     var selectedCategory = document.getElementById("item_dropdown").options[document.getElementById("item_dropdown").selectedIndex].getAttribute("data-category");
-                    if(selectedCategory === "Common"){
+                    var selectedNixItemId = document.getElementById("item_dropdown").selectedOptions[0].getAttribute("data-nix-item-id");
+                    console.log(selectedCategory);
+                    console.log(selectedNixItemId);
+                    if (selectedCategory === "Branded") {
+                        // Make an AJAX request to get nutrition information for branded items
+                        fetch('/get_brand_nutrition_info', {
+                            method: 'POST', 
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                nix_item_id: selectedNixItemId,
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            // Update the nutrition information for branded items
+                            var nutritionInfoResult = "<p>Nutrition Information for " + selectedFood + " (Branded):</p>";
+                            nutritionInfoResult += "<ul>";
+                            nutritionInfoResult += "<li>Calories: " + data.nf_calories + "</li>";
+                            nutritionInfoResult += "<li>Protein: " + data.nf_protein + "</li>";
+                            nutritionInfoResult += "<li>Carbohydrates: " + data.nf_total_carbohydrate + "</li>";
+                            nutritionInfoResult += "<li>Fat: " + data.nf_total_fat + "</li>";
+                            nutritionInfoResult += "</ul>";
+
+                            document.getElementById("nutrition_info_result").innerHTML = nutritionInfoResult;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            document.getElementById("nutrition_info_result").innerHTML = "<p>Error fetching nutrition information.</p>";
+                        });
+                    }
+                    else{
+                        // Make an AJAX request to get nutrition information for common items
                         fetch('/get_nutrition_info', {
                             method: 'POST',
                             headers: {
@@ -83,35 +133,6 @@
                             proteinValue.innerHTML = data.nf_protein;
                             carbsValue.innerHTML = data.nf_total_carbohydrate;
                             fatValue.innerHTML = data.nf_total_fat;
-
-                            document.getElementById("nutrition_info_result").style.display = "block";
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            document.getElementById("nutrition_info_result").innerHTML = "<p>Error fetching nutrition information.</p>";
-                        });
-                    }
-                    else if(selectedCategory === "Branded"){
-                        // Make an AJAX request to get nutrition information for branded items
-                        fetch('/get_brand_nutrition_info', {
-                            method: 'POST', 
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                nix_item_id: selectedNixItemId,
-                            }),
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            // Update the nutrition information for branded items
-                            var nutritionInfoResult = "<p>Nutrition Information for " + selectedFood + " (Branded):</p>";
-                            nutritionInfoResult += "<ul>";
-                            nutritionInfoResult += "<li>Calories: " + data.nf_calories + "</li>";
-                            nutritionInfoResult += "<li>Protein: " + data.nf_protein + "</li>";
-                            nutritionInfoResult += "<li>Carbohydrates: " + data.nf_total_carbohydrate + "</li>";
-                            nutritionInfoResult += "<li>Fat: " + data.nf_total_fat + "</li>";
-                            nutritionInfoResult += "</ul>";
 
                             document.getElementById("nutrition_info_result").innerHTML = nutritionInfoResult;
                         })

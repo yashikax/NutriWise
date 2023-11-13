@@ -35,12 +35,15 @@
             <label for="item_dropdown">Select Item:</label>
             <select id="item_dropdown" name="item_dropdown">
                 {% for item, calories, category in result %}
-                {% if category == "Common" %}
-                    <option value="{{ item }}" data-category="{{ category }}">{{ item }}</option>
-                {% endif %}
+                <option value="{{ item }}" data-category="{{ category }}" data-nix-item-id="{{ nix_item_id }}">{{ item }} ({{ category }})</option>
                 {% endfor %}
             </select>
-            
+            <button type="button" onclick="getCalories()">Get Calories</button>
+            <div id="calories_result">
+                {% if selected_item %}
+                    <p>Calories for {{ selected_item.name }} ({{ category }}): {{ selected_item.calories }}</p>
+                {% endif %}
+            </div>
             <button type="button" onclick="getNutritionInfo()">Get Nutrition Info</button>
             <div id="nutrition_info_result" style="display: none;">
                 <p id="nutrition_info_text"></p>
@@ -54,6 +57,18 @@
             <script>
                 var resultData = {{ result | tojson }};
                 var selected_item = null;
+
+                function getCalories() {
+                    var selectedFood = document.getElementById("item_dropdown").value;
+                    var selectedResult = resultData.find(item => item[0] === selectedFood);
+
+                    if (selectedResult) {
+                        var caloriesResult = "<p>Calories for " + selectedResult[0] + " (" + selectedResult[2] + "): " + selectedResult[1] + "</p>";
+                        document.getElementById("calories_result").innerHTML = caloriesResult;
+                    } else {
+                        document.getElementById("calories_result").innerHTML = "<p>No data available for the selected item.</p>";
+                    }
+                }
 
                 function getNutritionInfo() {
                     

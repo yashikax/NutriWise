@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -13,28 +13,85 @@ migrate = Migrate(app, db)
 
 NUTRITIONIX_APP_ID = 'ecd1d15d'
 NUTRITIONIX_APP_KEY = '2742b9b2de10e8f1280716792f7d0ccd'
+NUTRITIONIX_USER_ID = '0'
 
 def get_nutrition_data(query):
-    url = 'https://api.nutritionix.com/v1_1/search/'
+    url = 'https://trackapi.nutritionix.com/v2/search/instant'
+    headers = {
+        'x-app-id': NUTRITIONIX_APP_ID,
+        'x-app-key': NUTRITIONIX_APP_KEY,
+        'x-remote-user-id': NUTRITIONIX_USER_ID,
+    }
     params = {
-        'appId': NUTRITIONIX_APP_ID,
-        'appKey': NUTRITIONIX_APP_KEY,
         'query': query,
     }
-    response = requests.get(url, params=params)
-    data = response.json()
+    try:
+        response = requests.get(url, headers=headers, params=params)
+        #response = requests.get("https://trackapi.nutritionix.com/v2/search/instant?query=apple")
+        response.raise_for_status()
+        data = response.json()
+        result = []
 
-    # Extract relevant information from the API response
-    if 'hits' in data:
-        hits = data['hits']
-        if hits:
-            first_hit = hits[0]['fields']
-            return {
-                'name': first_hit['item_name'],
-                'calories': first_hit['nf_calories'],
-            }
+        if 'branded' in data:
+            branded_foods = data['branded']
+            result.extend([(food['food_name'], food.get('nf_calories', 'N/A'),'Branded') for food in branded_foods])
 
+        if 'common' in data:
+            common_foods = data['common']
+            result.extend([(food['food_name'], food.get('nf_calories', 'N/A'),'Common') for food in common_foods])
+        
+        return result
+    except requests.exceptions.HTTPError as errh:
+        print ("HTTP Error:",errh)
+    except requests.exceptions.ConnectionError as errc:
+        print ("Error Connecting:",errc)
+    except requests.exceptions.Timeout as errt:
+        print ("Timeout Error:",errt)
+    except requests.exceptions.RequestException as err:
+        print("RequestException:", type(err).__name__, "-", err)
     return None
+
+def get_nutrition_info(food_name, category):
+    url = 'https://trackapi.nutritionix.com/v2/natural/nutrients' if category == 'Common' else 'https://trackapi.nutritionix.com/v2/search/item'
+    
+    headers = {
+        'x-app-id': NUTRITIONIX_APP_ID,
+        'x-app-key': NUTRITIONIX_APP_KEY,
+        'x-remote-user-id': NUTRITIONIX_USER_ID,
+    }
+
+    params = {
+        'query': food_name,
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=params)
+        response.raise_for_status()
+        data = response.json()
+        nutrition_info = data.get('foods', [{}])[0]
+        return {
+            'nf_calories': nutrition_info.get('nf_calories', 'N/A'),
+            'nf_protein': nutrition_info.get('nf_protein', 'N/A'),
+            'nf_total_carbohydrate': nutrition_info.get('nf_total_carbohydrate', 'N/A'),
+            'nf_total_fat': nutrition_info.get('nf_total_fat', 'N/A'),
+        }
+        #return data.get('foods', [{}])[0]  # Return the first food item or an empty dictionary
+    except requests.exceptions.HTTPError as errh:
+        print("HTTP Error:", errh)
+    except requests.exceptions.ConnectionError as errc:
+        print("Error Connecting:", errc)
+    except requests.exceptions.Timeout as errt:
+        print("Timeout Error:", errt)
+    except requests.exceptions.RequestException as err:
+        print("RequestException:", type(err).__name__, "-", err)
+
+    return {
+        'nf_calories': 'N/A',
+        'nf_protein': 'N/A',
+        'nf_total_carbohydrate': 'N/A',
+        'nf_total_fat': 'N/A',
+    }
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -105,7 +162,7 @@ def calculate_bmi(weight, height):
     bmi = weight / (height ** 2)
     return round(bmi, 2)
 
-@app.route('/home2')
+@app.route('/home2',methods=['GET', 'POST'])
 def home2_page():
     # Check if the user is logged in
     user = session.get('user')
@@ -114,17 +171,45 @@ def home2_page():
         return redirect(url_for('login_page'))
 
     # Render home2.html with the user's name
+    selected_item = None
     if request.method == 'POST':
         search_query = request.form.get('search_query', '').lower()
         result = get_nutrition_data(search_query)
+        #selected_item = None
         # Check if the search query exists in the grocery data
-        if result:
+        '''if result:
             return render_template('home2.html', username=user['name'], result=result)
         else:
             result = None
-            return render_template('home2.html', username=user['name'], result=result, error='Item not found.')
-    return render_template('home2.html', username=user['name'], result=None, error=None)
-    
+            print(search_query)
+            return render_template('home2.html', username=user['name'], result=result, error=search_query)
+    return render_template('home2.html', username=user['name'], result=None, error=None)'''
+        if result:
+            selected_item = {
+                'name': result[0][0],
+                'category': result[0][2],
+                'nf_calories': 'N/A',
+                'nf_protein': 'N/A',
+                'nf_total_carbohydrate': 'N/A',
+                'nf_total_fat': 'N/A',
+            }
+
+            return render_template('home2.html', username=user['name'], result=result, selected_item=selected_item)
+        else:
+            result = None
+            return render_template('home2.html', username=user['name'], result=result, error='Item not found.', selected_item=selected_item)
+
+    return render_template('home2.html', username=user['name'], result=None, error=None, selected_item=selected_item)
+
+@app.route('/get_nutrition_info', methods=['POST'])
+def get_nutrition_info_route():
+    food_name = request.json.get('food_name', '')
+    category = request.json.get('category', '')
+    print(f"Received JSON data: food_name={food_name}, category={category}")
+    nutrition_info = get_nutrition_info(food_name, category)
+
+    return jsonify(nutrition_info)
+
 
 if __name__ == "__main__":
     with app.app_context():
