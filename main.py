@@ -92,6 +92,47 @@ def get_nutrition_info(food_name, category):
         'nf_total_fat': 'N/A',
     }
 
+def get_nutrition_info_natural_language(natural_language_text):
+    url = 'https://trackapi.nutritionix.com/v2/natural/nutrients'
+    
+    headers = {
+        'x-app-id': NUTRITIONIX_APP_ID,
+        'x-app-key': NUTRITIONIX_APP_KEY,
+        'x-remote-user-id': NUTRITIONIX_USER_ID,
+        'Content-Type': 'application/json',
+    }
+
+    data = {
+        'query': natural_language_text,
+        'timezone': "US/Eastern"
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        data = response.json()
+        nutrition_info = data.get('foods', [{}])[0]
+        return {
+            'nf_calories': nutrition_info.get('nf_calories', 'N/A'),
+            'nf_protein': nutrition_info.get('nf_protein', 'N/A'),
+            'nf_total_carbohydrate': nutrition_info.get('nf_total_carbohydrate', 'N/A'),
+            'nf_total_fat': nutrition_info.get('nf_total_fat', 'N/A'),
+        }
+    except requests.exceptions.HTTPError as errh:
+        print("HTTP Error:", errh)
+    except requests.exceptions.ConnectionError as errc:
+        print("Error Connecting:", errc)
+    except requests.exceptions.Timeout as errt:
+        print("Timeout Error:", errt)
+    except requests.exceptions.RequestException as err:
+        print("RequestException:", type(err).__name__, "-", err)
+
+    return {
+        'nf_calories': 'N/A',
+        'nf_protein': 'N/A',
+        'nf_total_carbohydrate': 'N/A',
+        'nf_total_fat': 'N/A',
+    }
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -210,6 +251,15 @@ def get_nutrition_info_route():
 
     return jsonify(nutrition_info)
 
+@app.route('/get_nutrition_info_natural_language', methods=['POST'])
+def get_nutrition_info_natural_language_route():
+    natural_language_text = request.json.get('natural_language_text', '')
+    print(f"Received JSON data: natural_language_text={natural_language_text}")
+
+    # Call the Nutritionix API with natural language text
+    nutrition_info = get_nutrition_info_natural_language(natural_language_text)
+
+    return jsonify(nutrition_info)
 
 if __name__ == "__main__":
     with app.app_context():
