@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile - NutriWise</title>
+    <!-- Add any additional styles or meta tags as needed -->
+</head>
+<body>
+    <h1>Your Profile</h1>
+    <!-- Add logic to display user's profile information here -->
+    <p>Name: {{ user.name }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Username: {{user.username}} </p>
+    <p>Password: {{user.password}} </p>
+    <!-- Add form to selectively update user information -->
+    <button onclick="showUpdateForm()">Update Details</button>
+    <div id="updateForm" style="display: none;">
+        <form action="{{ url_for('update_profile') }}" method="post">
+            <p>Enter only field which you want to update</p>
+            <label for="newEmail">New Email:</label>
+            <input type="email" id="newEmail" name="newEmail">
+            <br>
+            <label for="newUsername">New Username:</label>
+            <input type="text" id="newUsername" name="newUsername">
+            <br>
+            <label for="newPassword">New Password:</label>
+            <input type="password" id="newPassword" name="newPassword">
+            <br>
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+
+    <script>
+        function showUpdateForm() {
+            var updateForm = document.getElementById("updateForm");
+            updateForm.style.display = "block";
+        }
+    </script>
+    <a href="{{ url_for('home2_page') }}">Back to Home</a>
+</body>
+</html>

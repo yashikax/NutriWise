@@ -7,7 +7,7 @@ body {
 }
 body {
     /* Set background image and style */
-    background-image: url('../static/login_bg.jpg');
+    background-image: url('../static/istockphoto.jpg');
     background-size: cover; /* Make the background image cover the entire screen */
     background-repeat: no-repeat; /* Prevent the background image from repeating */
 }
@@ -15,7 +15,7 @@ body {
     max-width: 400px;
     margin: 100px auto;
     padding: 20px;
-    background-color: rgba(255, 255, 255, 0.8); /* 80% transparent white */
+    background-color: rgba(255, 255, 255, 0.9); /* 80% transparent white */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     text-align: center;
@@ -41,7 +41,7 @@ input {
 }
 
 input[type="submit"] {
-    background-color: #007bff;
+    background-color: #000000;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -50,7 +50,8 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: rgb(190, 230, 152);
+    color: #000000;
 }
 
 /* Style for registration link */

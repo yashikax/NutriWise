@@ -14,6 +14,7 @@
     <nav>
         <ul>
             <li><a href="{{ url_for('home2_page') }}">Home</a></li>
+            <li><a href="{{ url_for('view_profile') }}">View Profile</a></li>
             <li><a href="#">About Us</a></li>
             <li><a href="#">Features</a></li>
             <li><a href="#">Reviews</a></li>
@@ -66,6 +67,18 @@
                 <li>Fat: <span id="fat_value"></span></li>
             </ul>
         </div>
+        <label for="exercise_natural_language_text">Enter Natural Language Text:</label>
+        <input type="text" id="exercise_natural_language_text" name="exercise_natural_language_text" required>
+
+        <button type="button" onclick="getExerciseInfoNaturalLanguage()">Get Exercise Info</button>   
+
+        <div id="exercise_info_result_natural_language" style="display: none;">
+            <p id="exercise_info_text_natural_language"></p>
+            <ul>
+                <li>Calories Burned: <span id="exercise_calories_value_natural_language"></span></li>
+            </ul>
+        </div>
+
         <script>
             var resultData = {{ result | tojson }};
             var selected_item = null;
@@ -169,11 +182,116 @@
                     document.getElementById("nutrition_info_result_natural_language").style.display = "block";
                 });
             }
+            function getExerciseInfoNaturalLanguage() {
+                var naturalLanguageText = document.getElementById("exercise_natural_language_text").value;
+
+                fetch('/get_exercise_info_natural_language', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        natural_language_text: naturalLanguageText,
+                        gender: "female",  // You may want to dynamically get these values from the user
+                        weight_kg: 72.5,
+                        height_cm: 167.64,
+                        age: 30,
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    var exerciseInfoResult = "<p>Exercise Information for " + naturalLanguageText + ":</p>";
+                    exerciseInfoResult += "<ul>";
+                    exerciseInfoResult += "<li>Calories Burned: " + data.nf_calories + "</li>";
+                    exerciseInfoResult += "</ul>";
+
+                    document.getElementById("exercise_info_result_natural_language").innerHTML = exerciseInfoResult;
+                    document.getElementById("exercise_info_result_natural_language").style.display = "block";
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById("exercise_info_result_natural_language").innerHTML = "<p>Error fetching exercise information.</p>";
+                    document.getElementById("exercise_info_result_natural_language").style.display = "block";
+                });
+            }
         </script>
+        <label for="emotionText">Enter your text for emotion classification:</label>
+        <textarea name="messageText" id="emotionText" rows="4" cols="50" required></textarea>
+        <br>
+        <button type="button" onclick="classifyEmotion()">Classify Emotion</button>
+        
+        <div id="emotion_prediction_result" style="display: none;">
+            <ul>
+                <li>Mood: <span id="emotion_prediction_value"></span></li>
+            </ul>
+        </div>
+        <div id="food_options" style="display: none;"></div>
+
+        <script>
+            function classifyEmotion() {
+                var emotionText = document.getElementById("emotionText").value;
+        
+                fetch('/emotion_classification', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'messageText=' + encodeURIComponent(emotionText),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        document.getElementById("error_message").innerHTML = "<p>Error: " + data.error + "</p>";
+                        document.getElementById("emotion_prediction_result").innerHTML = "";
+                    } else {
+                        document.getElementById("error_message").innerHTML = "";
+                        document.getElementById("emotion_prediction_result").innerHTML = "<p>Emotion Prediction:</p>";
+                        document.getElementById("emotion_prediction_result").innerHTML += "<ul>";
+                        document.getElementById("emotion_prediction_result").innerHTML += "<li>Label: " + data.label + "</li>";
+                        document.getElementById("emotion_prediction_result").innerHTML += "<li>Score: " + data.score + "</li>";
+                        document.getElementById("emotion_prediction_result").innerHTML += "</ul>";
+                        displayFoodOptions(data.label);
+                        document.getElementById("emotion_prediction_result").style.display = "block";
+                        console.log(data.label)
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById("error_message").innerHTML = "<p>Error fetching emotion prediction.</p>";
+                    document.getElementById("emotion_prediction_result").innerHTML = "";
+                });
+            }
+            function displayFoodOptions(emotion) {
+                // Define food options based on emotions
+                const foodOptions = {
+                    joy: "🍔 Burger and 🍟 Fries",
+                    sadness: "🍲 Comfort food like soup",
+                    anger: "🌶 Spicy food",
+                    surprise: "🍣 Sushi",
+                    fear: "🍿 Popcorn",
+                    love: "Fruits, Smoothies"
+                    // Add more emotions and corresponding food options as needed
+                };
+
+                // Check if the emotion has a corresponding food option
+                if (foodOptions.hasOwnProperty(emotion)) {
+                    const foodOption = foodOptions[emotion];
+                    document.getElementById("food_options").innerHTML = "<p>Food Options:</p><p>" + foodOption + "</p>";
+                    document.getElementById("food_options").style.display = "block";
+                } else {
+                    document.getElementById("food_options").innerHTML = "<p>No specific food options for this emotion.</p>";
+                    document.getElementById("food_options").style.display = "block";
+                }
+            }
+        </script>
+        
+        <div id="error_message"></div>
+
         {% if error %}
             <p>{{ error }}</p>
         {% endif %}
-    
+        
+        
     </main>
     <section class="chatbot">
         <h2>Chat with NutriWise Assistant</h2>

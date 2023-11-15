@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 import requests
+from transformers import pipeline
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -14,6 +15,44 @@ migrate = Migrate(app, db)
 NUTRITIONIX_APP_ID = 'ecd1d15d'
 NUTRITIONIX_APP_KEY = '2742b9b2de10e8f1280716792f7d0ccd'
 NUTRITIONIX_USER_ID = '0'
+
+def get_exercise_info_natural_language(natural_language_text, gender, weight_kg, height_cm, age):
+    url = 'https://trackapi.nutritionix.com/v2/natural/exercise'
+
+    headers = {
+        'x-app-id': NUTRITIONIX_APP_ID,
+        'x-app-key': NUTRITIONIX_APP_KEY,
+        'Content-Type': 'application/json',
+    }
+
+    data = {
+        'query': natural_language_text,
+        'gender': gender,
+        'weight_kg': weight_kg,
+        'height_cm': height_cm,
+        'age': age,
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        data = response.json()
+        exercise_info = data.get('exercises', [{}])[0]
+        return {
+            'nf_calories': exercise_info.get('nf_calories', 'N/A'),
+        }
+    except requests.exceptions.HTTPError as errh:
+        print("HTTP Error:", errh)
+    except requests.exceptions.ConnectionError as errc:
+        print("Error Connecting:", errc)
+    except requests.exceptions.Timeout as errt:
+        print("Timeout Error:", errt)
+    except requests.exceptions.RequestException as err:
+        print("RequestException:", type(err).__name__, "-", err)
+
+    return {
+        'nf_calories': 'N/A',
+    }
 
 def get_nutrition_data(query):
     url = 'https://trackapi.nutritionix.com/v2/search/instant'
@@ -141,9 +180,33 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)    
 
+emotion_classifier = pipeline("text-classification", model='bhadresh-savani/distilbert-base-uncased-emotion', return_all_scores=True)
+@app.route('/emotion_classification', methods=['POST'])
+def emotion_classification():
+    user_input = request.form['messageText'].encode('utf-8').strip().decode('utf-8')  # Ensure user_input is a string
+    try:
+        prediction = emotion_classifier(user_input)
+        print(prediction)
+
+        if prediction:
+            max_emotion = max(prediction[0], key=lambda x: x['score'])
+            return jsonify(max_emotion)
+        else:
+            return jsonify({'error': 'No emotions predicted.'})
+
+    except Exception as e:
+        print(str(e))
+        return jsonify({'error': str(e)})
+
 @app.route('/')
 def main_page():
     return render_template('home.html')
+
+@app.route('/view_profile')
+def view_profile():
+    # Add logic to retrieve and display the user's profile information
+    user = session.get('user')
+    return render_template('view_profile.html', user=user)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
@@ -181,6 +244,29 @@ def registration_page():
         return redirect(url_for('login_page'))
 
     return render_template('registration.html')
+
+@app.route('/update_profile', methods=['POST'])
+def update_profile():
+    user = session.get('user')
+
+    # Get the new information from the form
+    new_email = request.form.get('newEmail')
+    new_username = request.form.get('newUsername')
+    new_password = request.form.get('newPassword')
+
+    # Update the user's information if the fields are not empty
+    if new_email:
+        user['email'] = new_email
+    if new_username:
+        user['username'] = new_username
+    if new_password:
+        user['password'] = generate_password_hash(new_password, method='pbkdf2:sha256')
+
+    # Save the updated user information
+    session['user'] = user
+
+    # Redirect back to the profile page
+    return redirect(url_for('view_profile'))
 
 @app.route('/bmi', methods=['GET', 'POST'])
 def bmi_page():
@@ -251,7 +337,7 @@ def get_nutrition_info_route():
 
     return jsonify(nutrition_info)
 
-@app.route('/get_nutrition_info_natural_language', methods=['POST'])
+@app.route('/get_nutrition_info_natural_language', methods=['POST']) 
 def get_nutrition_info_natural_language_route():
     natural_language_text = request.json.get('natural_language_text', '')
     print(f"Received JSON data: natural_language_text={natural_language_text}")
@@ -260,6 +346,21 @@ def get_nutrition_info_natural_language_route():
     nutrition_info = get_nutrition_info_natural_language(natural_language_text)
 
     return jsonify(nutrition_info)
+
+@app.route('/get_exercise_info_natural_language', methods=['POST'])
+def get_exercise_info_natural_language_route():
+    natural_language_text = request.json.get('natural_language_text', '')
+    gender = request.json.get('gender', '')
+    weight_kg = request.json.get('weight_kg', '')
+    height_cm = request.json.get('height_cm', '')
+    age = request.json.get('age', '')
+
+    print(f"Received JSON data: natural_language_text={natural_language_text}, gender={gender}, weight_kg={weight_kg}, height_cm={height_cm}, age={age}")
+
+    # Call the Nutritionix API with natural language text
+    exercise_info = get_exercise_info_natural_language(natural_language_text, gender, weight_kg, height_cm, age)
+
+    return jsonify(exercise_info)
 
 if __name__ == "__main__":
     with app.app_context():
