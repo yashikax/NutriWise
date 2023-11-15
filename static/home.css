@@ -12,9 +12,9 @@ body {
 
 /* Style the header */
 header {
-    background-image: url('../static/bg-header.jpg');
+    background-image: url('../static/health.jpg');
     background-size: cover;
-    color: #2ee297;
+    
     text-align: center;
     padding: 140px 0;
     height: 300px;
@@ -24,24 +24,38 @@ header {
 
 /* Style the heading */
 h1 {
-    font-size: 48px;
-    margin-bottom: 18px;
+    font-family: 'Merriweather', Arial, Helvetica, sans-serif;
+    font-size: 60px;
+    margin-bottom: 20px;
+    color: rgb(255, 255, 255);
 }
 
-/* Style the call-to-action button */
+.p1{
+    color: rgb(190, 230, 152);
+    font-size: 30px;
+    font-family: 'Dancing Script', Arial, Helvetica, sans-serif;
+}
+
 .cta-button {
-    background-color: #007bff;
+    background-color: transparent;
     color: #fff;
     padding: 15px 30px;
     text-decoration: none;
-    border-radius: 5px;
+    border: 2px solid #fff;
+    border-top-left-radius: 20px; /* Adjust the values as needed */
+    border-top-right-radius: 20px; /* Adjust the values as needed */
+    border-bottom-left-radius: 20px; /* Adjust the values as needed */
+    border-bottom-right-radius: 20px; /* Adjust the values as needed */
     font-weight: bold;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .cta-button:hover {
-    background-color: #0056b3;
+    background-color: #fff;
+    color: #000;
 }
+
+
 
 /* Style the navigation menu */
 nav ul {
@@ -62,29 +76,76 @@ nav a {
     font-weight: bold;
 }
 
+/* Style the About Us section */
+.about-us {
+    background-color: #fff;
+    padding: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.about-us h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.about-text {
+    text-align: center;
+    font-size: 18px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+/* Add responsive styles for smaller screens if needed */
+@media (max-width: 768px) {
+    .about-text {
+        text-align: center;
+    }
+}
+
+.vision{
+    text-align: center;
+    font-size: 28px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+.vision-text{
+    text-align: center;
+    font-size: 18px;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+
 /* Style the main content */
 main {
     max-width: 1200px;
     margin: 0 auto;
+    margin-top: 0%;
+    margin-bottom: 10px;
     padding: 20px;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
 }
 
-/* Style sections */
-.featured {
-    padding: 30px;
-    margin-bottom: 30px;
+
+.key{
+    text-align: center;
+    padding: 10px;
+    
 }
 
 .featured h2 {
     font-size: 28px;
-    color: #333;
+    color: #000000;
     margin-bottom: 20px;
 }
 
-.featured ul {
+/*.featured ul {
     list-style: none;
     margin-left: 20px;
 }
@@ -93,19 +154,71 @@ main {
     margin-bottom: 10px;
     font-size: 18px;
     color: #555;
+}*/
+/* Style the features container */
+.features-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
+
+/* Style individual features */
+.feature {
+    width: calc(45% - 10px); /* Two features in each row with spacing in between */
+    background-color: rgba(245, 242, 242);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: center;
+}
+/* Hover effect for the key features */
+.feature:hover {
+    background-color: rgb(190, 230, 152); /* Change to green on hover */
+    color: #fff; /* Text color on hover */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+
+/* Additional styles for the features */
+.feature a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+
+/* Style the 7th feature in the middle */
+.feature:nth-child(7) {
+    width: 45%; /* Set a fixed width, e.g., 50% */
+    margin: 0 auto; /* Center the 7th feature horizontally */
+    text-align: center;
+}
+
+
+
+
+/* Add responsive styles for smaller screens if needed */
+@media (max-width: 768px) {
+    .feature {
+        width: 100%;
+    }
+}
+
 
 /* Style the testimonial section */
 .testimonial {
-    background-color: #f9f9f9;
+    background-color: rgba(0, 0, 0, 0.8);
     padding: 30px;
     margin-bottom: 30px;
     text-align: center;
+    border-radius: 8px;
+    
 }
 
 .testimonial h2 {
     font-size: 28px;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 20px;
 }
 
@@ -129,5 +242,5 @@ main {
     color: #777;
 }
 nav a:hover {
-    color: #007bff;
+    color: rgb(190, 230, 152);
 }

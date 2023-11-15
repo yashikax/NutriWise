@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NutriWise - Your Nutrition Companion</title>
     <link rel="stylesheet" href="..\static\home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Autour+One&family=Caprasimo&family=
+Dancing+Script&family=Inconsolata:wght@300&family=Luckiest+Guy&family=Merriweather:wght@300&family=Montserrat&
+family=Pacifico&family=Poller+One&family=Sacramento&family=Satisfy&family=Ysabeau+Infant&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <h1>Welcome to NutriWise</h1>
-        <p>Your Personalized Nutrition Companion</p>
+        <p class="p1">Your Personalized Nutrition Companion</p>
+        <br>
+        <br>
         <br>
         <br>
         <a href="{{ url_for('login_page') }}" class="cta-button">Get Started</a>
@@ -22,25 +29,58 @@
             <li><a href="#">Reviews</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
-    </nav>  
-    <main>
-        <section class="featured">
-            <h2>Key Features</h2>
-            <ul>
-                <li><a href="#">Nutrition Analysis</a></li>
-                <li><a href="#">Food Swaps</a></li>
-                <li><a href="#">Expense Tracking</a></li>
-                <li><a href="#">Nutritional Contents</a></li>
-                <li><a href="{{ url_for('bmi_page') }}">BMI Calculator</a></li> 
-                <li><a href="#">Health Tips</a></li>
-                <li><a href="#">Personalized Menu Suggestions</a></li>
-            </ul>
-            <a href="#" class="cta-button">Get Started</a>
-        </section>
+    </nav> 
+    
+    <section class="about-us">
+        <h2 class="key">About Us</h2>
+        <p class="about-text">
+            Welcome to NutriWise, your trusted partner on the journey to a healthier you!
+            <br>
+            At NutriWise, we're on a mission to transform the way you approach nutrition and wellness. 
+            Our team is fueled by a passion for health and a commitment to making your life better. 
+            We've created a one-of-a-kind web application designed to empower you to take control of your diet and your well-being.
+        </p>
+        <br>
+        <h2 class="vision">Our Vision</h2>
+        <p class="vision-text">
+            Our vision is simple yet powerful: we want to see you at your best, living your life to the fullest, and feeling fantastic every day.
+             We believe that good nutrition and a balanced lifestyle are the keys to achieving this vision.</p>
+    </section>
+    
+            <!--<a href="{{ url_for('bmi_page') }}">BMI Calculator</a>-->
+            <main>
+                <section class="featured">
+                    <h2 class="key">What Sets Us Apart</h2>
+                    <div class="features-container">
+                        <div class="feature">
+                            <a href="#">Nutrition Analysis</a>
+                        </div>
+                        <div class="feature">
+                            <a href="#">Food Alternative</a>
+                        </div>
+                        <div class="feature">
+                            <a href="#">Exercise Tracking</a>
+                        </div>
+                        <div class="feature">
+                            <a href="#">Nutrition Lookup</a>
+                        </div>
+                        <div class="feature">
+                            <a href="#">BMI Calculator</a>
+                        </div>
+                        <div class="feature">
+                            <a href="#">Health Tips</a>
+                        </div>
+                        <div class="feature">
+                            <a href="#">Personalized Chatbot</a>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        <main> 
         <section class="testimonial">
             <h2>What Our Users Say</h2>
             <div class="testimonial-card">
-                <p>"NutriWise has transformed the way I think about my diet. It's an invaluable tool for anyone looking to eat healthier."</p>
+                <p class="p2">"NutriWise has transformed the way I think about my diet. It's an invaluable tool for anyone looking to eat healthier."</p>
                 <p class="author">- Sarah M.</p>
             </div>
         </section>
