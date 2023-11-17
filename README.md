@@ -17,7 +17,7 @@ Documentation: [NUTRITIONIX API documentation](https://docs.google.com/document/
 + [EDAMAM](https://www.edamam.com/)
 Documentation: [EDAMAM API documentation](https://developer.edamam.com/edamam-docs-nutrition-api)
 
-##Requirements:
+## Requirements:
 + Python
 + Flask
 + Tensorflow
@@ -25,23 +25,23 @@ Documentation: [EDAMAM API documentation](https://developer.edamam.com/edamam-do
 + Pycharm
 + Transformers
 
-##Installations:
-Install python, and check for python version on command prompt to ensure that python is corrctly installed and has been correctly added to path.
-Python check version: 
+## Installations:
+### Install python, and check for python version on command prompt to ensure that python is corrctly installed and has been correctly added to path.
+### Python check version: 
 ```python --version```
-If says python not found, then install python (if not installed) and make sure that python is correctly added to path, under environment variables.
-You can upgrade pip before installation using cmd:
+#### If says python not found, then install python (if not installed) and make sure that python is correctly added to path, under environment variables.
+#### You can upgrade pip before installation using cmd:
 ```pip install --upgrade pip```
-Install Flask
+#### Install Flask
 ```pip install Flask```
-Install Tensorflow
+#### Install Tensorflow
 ```pip install tensorflow```
-Install Pycharm
+#### Install Pycharm
 ```pip install pycharm```
-Install Trsanformers
+#### Install Trsanformers
 ```pip install transformer ```
 
-You can clone this repository, install the requirements later run main.py to host the website on local machine.
+### You can clone this repository, install the requirements later run main.py to host the website on local machine.
 
 ##### NOTE: test.py contains the nlp transformers code for sentiment analysis, which is used for mood analysis in our website.
  
