@@ -12,12 +12,12 @@ app.config['SECRET_KEY'] = 'oursynsecretsynkey'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-NUTRITIONIX_APP_ID = 'ecd1d15d'
-NUTRITIONIX_APP_KEY = '2742b9b2de10e8f1280716792f7d0ccd'
+NUTRITIONIX_APP_ID = '' #enter your api is here, get it by loging in into Nutritionix, its free
+NUTRITIONIX_APP_KEY = ''
 NUTRITIONIX_USER_ID = '0'
 
-API_ID='859d49b0'
-API_KEY='f99e1d1c544ef879801c576b472c74d3'
+API_ID=''   #enter your api is here, get it by loging in into Edamam, its free
+API_KEY=''
 
 def fetch_recipe(ingredients):
     base_url = 'https://api.edamam.com/search'
