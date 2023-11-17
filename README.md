@@ -24,6 +24,25 @@ Requirements:
 + SQL Alchemy
 + Pycharm
 + Transformers
+Installations:
+Install python, and check for python version on command prompt to ensure that python is corrctly installed and has been correctly added to path.
+Python check version: 
+```python --version```
+If says python not found, then install python (if not installed) and make sure that python is correctly added to path, under environment variables.
+You can upgrade pip before installation using cmd:
+```pip install --upgrade pip```
+Install Flask
+```pip install Flask```
+Install Tensorflow
+```pip install tensorflow```
+Install Pycharm
+```pip install pycharm```
+Install Trsanformers
+```pip install transformer ```
 
+You can clone this repository, install the requirements later run main.py to host the website on local machine.
+
+##### NOTE: test.py contains the nlp transformers code for sentiment analysis, which is used for mood analysis in our website.
+ 
 ### Nutriwise Project Report - will help you in getting to know the project better.
 + Link for [NUTRIWISE REPORT](https://docs.google.com/document/d/18zQtsFEqMVgc0tjpWX5bT8t1bDvzpmDX/edit?usp=drive_link&ouid=101026258092539715926&rtpof=true&sd=true)
