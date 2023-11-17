@@ -1,30 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to NutriWise</title>
-    <link rel="stylesheet" href="../static/home.css">
+    <link rel="stylesheet" href="../static/home2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Autour+One&family=Caprasimo&family=
+Dancing+Script&family=Inconsolata:wght@300&family=Luckiest+Guy&family=Merriweather:wght@300&family=Montserrat&
+family=Pacifico&family=Poller+One&family=Sacramento&family=Satisfy&family=Ysabeau+Infant&display=swap" rel="stylesheet">
 </head>
+    <style>
+        /* Add your CSS styles here */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+        }
+
+        .food-summary {
+            display: none;
+        }
+
+        li:hover .food-summary {
+            display: block;
+        }
+    </style>
+</head>
+
 <body>
     <header>
-        <h1>Welcome to NutriWise, {{ username }}!</h1>
-        <p>Your Personalized Nutrition Companion</p>
+        <div class="header-container">
+            <h1 class="welcome">Welcome to NutriWise, {{ username }}!</h1>
+        </div>
     </header>
+
     <nav>
         <ul>
-            <li><a href="{{ url_for('home2_page') }}">Home</a></li>
+            <li><a href="{{ url_for('main_page') }}">Home</a></li>
             <li><a href="{{ url_for('view_profile') }}">View Profile</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Reviews</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="{{ url_for('bmi_page') }}">BMI Calculator</a></li>
+            <!--<li><a href="#">Nutrient Lookup</a></li>
+            <li><a href="#">Daily Nutrient Analysis</a></li>
+            <li><a href="#">Workout Analysis</a></li>
+            <li><a href="#">Mood Tracker</a></li>-->
+            <li><a href="{{ url_for('tips_page') }}">Health Tips</a></li>
+            <li><a href="{{ url_for('alternative_page') }}">Food Alternatives</a></li>
         </ul>
     </nav>
+
+
     <main>
-        <h2>Welcome, {{ username }}!</h2>
+        <h2 class="hello">Hello, {{ username }}!</h2>
 
         <!-- Search Form -->
+        <div class="box" id="nutritional-lookup">
+        <h2 class="lookupp">Nutritional Content Lookup</h2>
+        <p class="lookup_p">Search nutritional content of any food item/grocery item,
+             from our exceptional food database of 60,000+ food items.</p>
         <form method="POST" action="{{ url_for('home2_page') }}">
             <label for="search_query">Search for Grocery Item:</label>
             <input type="text" id="search_query" name="search_query" required>
@@ -44,16 +80,28 @@
             
             <button type="button" onclick="getNutritionInfo()">Get Nutrition Info</button>
             <div id="nutrition_info_result" style="display: none;">
-                <p id="nutrition_info_text"></p>
+                <p id="nutrition_info_text">NUTRITION FACTS</p>
                 <ul>
                     <li>Calories: <span id="calories_value"></span></li>
                     <li>Protein: <span id="protein_value"></span></li>
                     <li>Carbohydrates: <span id="carbs_value"></span></li>
-                    <li>Fat: <span id="fat_value"></span></li>
+                    <li>Total Fat: <span id="fat_value"></span></li>
+                    <li>Saturated Fat: <span id="sat_value"></span></li>
+                    <li>Cholestrol: <span id="col_value"></span></li>
+                    <li>Sodium: <span id="sodium_value"></span></li>
+                    <li>Dietary Fiber: <span id="dietary_value"></span></li>
+                    <li>Sugar: <span id="sugar_value"></span></li>
+                    <li>Pottasium: <span id="pot_value"></span></li>
+                    
                 </ul>
             </div>
         {% endif %}
-        <label for="natural_language_text">Enter Natural Language Text:</label>
+    </div>
+    <div class="box" id="daily-nutrient-analysis">
+        <h2 class="nutrient_analysis">Daily Nutrient Analysis</h2>
+        <p class="nutirent_analysis_p">Enter a sentence regarding what you ate today.
+            Ex : I ate 2 chocolates today.</p>
+        <label for="natural_language_text">Enter here:</label>
         <input type="text" id="natural_language_text" name="natural_language_text" required>
 
         <button type="button" onclick="getNutritionInfoNaturalLanguage()">Get Nutrition Info of daily consumption.</button>   
@@ -64,10 +112,22 @@
                 <li>Calories: <span id="calories_value"></span></li>
                 <li>Protein: <span id="protein_value"></span></li>
                 <li>Carbohydrates: <span id="carbs_value"></span></li>
-                <li>Fat: <span id="fat_value"></span></li>
+                <li>Total Fat: <span id="fat_value"></span></li>
+                <li>Saturated Fat: <span id="sat_value"></span></li>
+                <li>Cholestrol: <span id="col_value"></span></li>
+                <li>Sodium: <span id="sodium_value"></span></li>
+                <li>Dietary Fiber: <span id="dietary_value"></span></li>
+                <li>Sugar: <span id="sugar_value"></span></li>
+                <li>Pottasium: <span id="pot_value"></span></li>
+
             </ul>
         </div>
-        <label for="exercise_natural_language_text">Enter Natural Language Text:</label>
+    </div>
+    <div class="box" id="workout-analysis">
+        <h2 class="workout_analysis">Workout Analysis</h2>
+        <p class="workout_analysis_p">Find out how many calories you burnt today
+            Ex: I did 1000 skipping today.</p>
+        <label for="exercise_natural_language_text">Enter here:</label>
         <input type="text" id="exercise_natural_language_text" name="exercise_natural_language_text" required>
 
         <button type="button" onclick="getExerciseInfoNaturalLanguage()">Get Exercise Info</button>   
@@ -78,6 +138,7 @@
                 <li>Calories Burned: <span id="exercise_calories_value_natural_language"></span></li>
             </ul>
         </div>
+    </div>
 
         <script>
             var resultData = {{ result | tojson }};
@@ -105,12 +166,25 @@
                         var proteinValue = document.getElementById("protein_value");
                         var carbsValue = document.getElementById("carbs_value");
                         var fatValue = document.getElementById("fat_value");
+                        var satValue = document.getElementById("sat_value");
+                        var colValue = document.getElementById("col_value");
+                        var sodiumValue = document.getElementById("sodium_value");
+                        var dietaryValue = document.getElementById("dietary_value");
+                        var sugarValue = document.getElementById("sugar_value");
+                        var potValue = document.getElementById("pot_value");
+
 
                         nutritionInfoText.innerHTML = "Nutrition Information for " + selectedFood + " (" + selectedCategory + "):";
                         caloriesValue.innerHTML = data.nf_calories;
                         proteinValue.innerHTML = data.nf_protein;
                         carbsValue.innerHTML = data.nf_total_carbohydrate;
                         fatValue.innerHTML = data.nf_total_fat;
+                        satValue.innerHTML = data.nf_saturated_fat;
+                        colValue.innerHTML = data.nf_cholesterol;
+                        sodiumValue.innerHTML = data.nf_sodium;
+                        dietaryValue.innerHTML = data.nf_dietary_fiber;
+                        sugarValue.innerHTML = data.nf_sugars;
+                        potValue.innerHTML = data.nf_potassium;
 
                         document.getElementById("nutrition_info_result").style.display = "block";
                     })
@@ -170,7 +244,14 @@
                     nutritionInfoResult += "<li>Calories: " + data.nf_calories + "</li>";
                     nutritionInfoResult += "<li>Protein: " + data.nf_protein + "</li>";
                     nutritionInfoResult += "<li>Carbohydrates: " + data.nf_total_carbohydrate + "</li>";
-                    nutritionInfoResult += "<li>Fat: " + data.nf_total_fat + "</li>";
+                    nutritionInfoResult += "<li>Total Fat: " + data.nf_total_fat + "</li>";
+                    nutritionInfoResult += "<li>Saturated Fat: " + data.nf_saturated_fat + "</li>";
+                    nutritionInfoResult += "<li>Cholestrol: " + data.nf_cholesterol + "</li>";
+                    nutritionInfoResult += "<li>Sodium: " + data.nf_sodium + "</li>";
+                    nutritionInfoResult += "<li>Dietray Fiber: " + data.nf_dietary_fiber + "</li>";
+                    nutritionInfoResult += "<li>Sugar: " + data.nf_total_fat + "</li>";
+                    nutritionInfoResult += "<li>Pottasium: " + data.nf_potassium + "</li>";
+                    
                     nutritionInfoResult += "</ul>";
 
                     document.getElementById("nutrition_info_result_natural_language").innerHTML = nutritionInfoResult;
@@ -215,6 +296,10 @@
                 });
             }
         </script>
+        <div class="box" id="mood-tracker">
+        <h2 class="sentiment_analysis">Mood Tracker</h2>
+        <p class="sentiment_analysis_p">Don’t let your mood take charge on your diet. Test Your mood, 
+            and choose a healthy alternative !!!.</p>
         <label for="emotionText">Enter your text for emotion classification:</label>
         <textarea name="messageText" id="emotionText" rows="4" cols="50" required></textarea>
         <br>
@@ -224,8 +309,112 @@
             <ul>
                 <li>Mood: <span id="emotion_prediction_value"></span></li>
             </ul>
+            <h2>9 Healthy Foods That Lift Your Mood</h2>
+
+    <ul>
+        <li>
+            <strong>Fatty fish</strong>
+            <div class="food-summary">Fatty fish like salmon are rich in omega-3 fatty acids, which may lower your risk of depression.</div>
+        </li>
+
+        <li>
+            <strong>Dark chocolate</strong>
+            <div class="food-summary">Dark chocolate is rich in compounds that may increase feel-good chemicals in your brain.</div>
+        </li>
+
+        <li>
+            <strong>Fermented foods</strong>
+            <div class="food-summary">Since up to 90% of your body’s serotonin is produced in your gut, a healthy gut may correspond to a good mood. Fermented foods like kimchi, yogurt, kefir, kombucha, and sauerkraut are rich in probiotics that support gut health.</div>
+        </li>
+
+        <li>
+            <strong>Bananas</strong>
+            <div class="food-summary">Bananas are a great source of natural sugar, vitamin B6, and prebiotic fiber, which work together to keep your blood sugar levels and mood stable.</div>
+        </li>
+
+        <li>
+            <strong>Oats</strong>
+            <div class="food-summary">Oats provide fiber that can stabilize your blood sugar levels and boost your mood. They’re also high in iron, which may improve mood symptoms in those with iron deficiency anemia.</div>
+        </li>
+
+        <li>
+            <strong>Berries</strong>
+            <div class="food-summary">Berries are rich in disease-fighting anthocyanins, which may lower your risk of depression.</div>
+        </li>
+
+        <li>
+            <strong>Nuts and seeds</strong>
+            <div class="food-summary">Certain nuts and seeds are high in tryptophan, zinc, and selenium, which may support brain function and lower your risk of depression.</div>
+        </li>
+
+        <li>
+            <strong>Coffee</strong>
+            <div class="food-summary">Coffee provides numerous compounds, including caffeine and chlorogenic acid, that may boost your mood. Research suggests that decaf coffee may even have an effect.</div>
+        </li>
+
+        <li>
+            <strong>Beans and lentils</strong>
+            <div class="food-summary">Beans and lentils are rich sources of mood-boosting nutrients, particularly B vitamins.</div>
+        </li>
+    </ul>
+
         </div>
-        <div id="food_options" style="display: none;"></div>
+        <div id="food_options" style="display: none;"><h2>9 Healthy Foods That Lift Your Mood</h2>
+
+            <ul>
+                <li>
+                    <strong>Fatty fish</strong>
+                    <div class="food-summary">Fatty fish like salmon are rich in omega-3 fatty acids, which may lower your risk of depression.</div>
+                </li>
+        
+                <li>
+                    <strong>Dark chocolate</strong>
+                    <div class="food-summary">Dark chocolate is rich in compounds that may increase feel-good chemicals in your brain.</div>
+                </li>
+        
+                <li>
+                    <strong>Fermented foods</strong>
+                    <div class="food-summary">Since up to 90% of your body’s serotonin is produced in your gut, a healthy gut may correspond to a good mood. Fermented foods like kimchi, yogurt, kefir, kombucha, and sauerkraut are rich in probiotics that support gut health.</div>
+                </li>
+        
+                <li>
+                    <strong>Bananas</strong>
+                    <div class="food-summary">Bananas are a great source of natural sugar, vitamin B6, and prebiotic fiber, which work together to keep your blood sugar levels and mood stable.</div>
+                </li>
+        
+                <li>
+                    <strong>Oats</strong>
+                    <div class="food-summary">Oats provide fiber that can stabilize your blood sugar levels and boost your mood. They’re also high in iron, which may improve mood symptoms in those with iron deficiency anemia.</div>
+                </li>
+        
+                <li>
+                    <strong>Berries</strong>
+                    <div class="food-summary">Berries are rich in disease-fighting anthocyanins, which may lower your risk of depression.</div>
+                </li>
+        
+                <li>
+                    <strong>Nuts and seeds</strong>
+                    <div class="food-summary">Certain nuts and seeds are high in tryptophan, zinc, and selenium, which may support brain function and lower your risk of depression.</div>
+                </li>
+        
+                <li>
+                    <strong>Coffee</strong>
+                    <div class="food-summary">Coffee provides numerous compounds, including caffeine and chlorogenic acid, that may boost your mood. Research suggests that decaf coffee may even have an effect.</div>
+                </li>
+        
+                <li>
+                    <strong>Beans and lentils</strong>
+                    <div class="food-summary">Beans and lentils are rich sources of mood-boosting nutrients, particularly B vitamins.</div>
+                </li>
+            </ul></div>
+        <h4 class="emotional_eating_p">Why MOOD ANALYSIS ? - BECAUSE EMOTIONAL EATING IS AWFUL</h4>
+           <P> What is emotional eating?
+            We don’t always eat just to satisfy physical hunger. Many of us also turn to food for comfort, stress relief, or to reward ourselves.
+             And when we do, we tend to reach for junk food, sweets, and other comforting but unhealthy food.</p>
+
+             
+        </div>
+
 
         <script>
             function classifyEmotion() {
@@ -264,13 +453,13 @@
             function displayFoodOptions(emotion) {
                 // Define food options based on emotions
                 const foodOptions = {
-                    joy: "🍔 Burger and 🍟 Fries",
-                    sadness: "🍲 Comfort food like soup",
-                    anger: "🌶 Spicy food",
-                    surprise: "🍣 Sushi",
-                    fear: "🍿 Popcorn",
-                    love: "Fruits, Smoothies"
-                    // Add more emotions and corresponding food options as needed
+                joy: "Yayy!!! Your mood is joyful. Refrain from eating anything unhealthy. Here are some options to lift your mood.",
+                sadness: ["🍔 Dark Chocolate", "🍟 Oats Maggi", "Bread-Butter-Jam"],
+                anger: ["🌶 Spicy food it is", "Spicy Chicken Sauté with Jalapeño", "Spicy Corn Skillet with Garlic and Chilis", "Roasted Cauliflower with Jalapeño Caper Vinaigrette"],
+                surprise: ["🍣 Sushi", "🍦 Ice Cream", "🍰 Cake", "🥨 Pretzels"],
+                fear: "🍿 Popcorn",
+                love: ["🍎 Apples", "🍓 Berries", "🥑 Avocado", "🍌 Smoothies", "🍇 Grapes"]
+                // Add more emotions and corresponding food options as needed
                 };
 
                 // Check if the emotion has a corresponding food option
@@ -283,7 +472,13 @@
                     document.getElementById("food_options").style.display = "block";
                 }
             }
+           
+            
         </script>
+        <form action="{{ url_for('bot_page') }}" method="post">
+            <input type="hidden" name="ingredients" value="default_value"> <!-- You can adjust the value as needed -->
+            <button type="submit">Click here for Recipe Suggestions</button>
+        </form>
         
         <div id="error_message"></div>
 
@@ -293,16 +488,10 @@
         
         
     </main>
-    <section class="chatbot">
-        <h2>Chat with NutriWise Assistant</h2>
-        <!-- Add your chatbot interface here -->
-        <div id="chatbot-container">
-            <!-- Your chatbot UI goes here -->
-        </div>
-    </section>
-    <!-- Other content goes here -->
-    <footer>
-        &copy; 2023 NutriWise - Your Nutrition Companion
-    </footer>
+    
+<footer class="footer">
+    &copy; 2023 NutriWise - Your Nutrition Companion
+</footer>
 </body>
+
 </html>

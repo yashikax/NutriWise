@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tips - NutriWise</title>
+    <link rel="stylesheet" href="../static/tips.css">
+    <link href="https://fonts.googleapis.com/css2?family=Autour+One&family=Caprasimo&family=
+Dancing+Script&family=Inconsolata:wght@300&family=Luckiest+Guy&family=Merriweather:wght@300&family=Montserrat&
+family=Pacifico&family=Poller+One&family=Sacramento&family=Satisfy&family=Ysabeau+Infant&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <h1>Health Tips</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home2_page') }}">Home</a></li>
+            <li><a href="{{ url_for('view_profile') }}">View Profile</a></li>
+            <li><a href="{{ url_for('bmi_page') }}">BMI Calculator</a></li>
+            <!--<li><a href="#">Nutrient Lookup</a></li>
+            <li><a href="#">Daily Nutrient Analysis</a></li>
+            <li><a href="#">Workout Analysis</a></li>
+            <li><a href="#">Mood Tracker</a></li>-->
+            <li><a href="{{ url_for('tips_page') }}">Health Tips</a></li>
+            <li><a href="{{ url_for('alternative_page') }}">Food Alternatives</a></li>
+            <!--<li><a href="#">Contact</a></li>-->
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Tips for a Healthy Diet</h2>
+
+        <img src="../static/couple+drinking+water+while+standing+on+bridge.jpg" alt="description photo">
+        <h2>Stay Hydrated</h2>
+        <p>Drink an adequate amount of water throughout the day.</p>
+        <p>Consider adding herbal teas or infused water for variety.</p>
+
+        <img src="../static/balance.png" alt="balance photo">
+        <h2>Balanced Diet</h2>
+        <p>Include a variety of fruits, vegetables, whole grains, lean proteins, and healthy fats in your meals.</p>
+        <p>Aim for a colorful plate to ensure a range of nutrients.</p>
+
+        <img src="../static/smallplate.png" alt="small photo">
+        <h2>Portion Control</h2>
+        <p>Be mindful of portion sizes to avoid overeating.</p>
+        <p>Use smaller plates to help control portion sizes.</p>
+
+        <h2>Limit Processed Foods</h2>
+        <p>Minimize the consumption of processed and packaged foods.</p>
+        <p>Opt for fresh, whole foods whenever possible.</p>
+
+        <img src="../static/SocialConnectedness-DiverseGroup-medium.jpg" alt="healthy photo">
+        <h2>Social Connections</h2>
+        <p>Maintain social connections with friends and family for emotional well-being.</p>
+        <p>Surround yourself with a supportive community.</p>
+
+        <h2>Regular Health Check-ups</h2>
+        <p>Schedule regular check-ups with healthcare professionals.</p>
+        <p>Monitor key health indicators such as blood pressure, cholesterol, and weight.</p>
+
+        <h2>Manage Stress</h2>
+        <p>Practice stress-reducing activities such as meditation, deep breathing, or yoga.</p>
+        <p>Take breaks and find time for activities that bring joy.</p>
+
+        <h2>Limit Added Sugars and Salt</h2>
+        <p>Minimize the intake of foods and beverages high in added sugars.</p>
+        <p>Be mindful of sodium content and choose low-sodium options.</p>
+
+        <h2>Healthy Snacking</h2>
+        <p>Choose nutrient-dense snacks like fruits, nuts, and yogurt.</p>
+        <p>Avoid excessive snacking, and listen to your body's hunger cues.</p>
+
+        <img src="../static/Exercise.png" alt="healthy photo">
+        <h2>Regular Physical Activity</h2>
+        <p>Engage in regular exercise, including both cardiovascular and strength training.</p>
+        <p>Find activities you enjoy to make fitness a part of your routine.</p>
+
+        <h2>Adequate Sleep</h2>
+        <p>Ensure you get enough quality sleep each night (typically 7-9 hours for adults).</p>
+        <p>Establish a consistent sleep schedule.</p>
+
+        <img src="../static/what-is-mindful-eating---picture.jpg" alt="healthy photo">
+        <h2>Mindful Eating</h2>
+        <p>Pay attention to what you eat and savor each bite.</p>
+        <p>Avoid distractions like TV or smartphones during meals.</p>
+
+        <h2>Limit Alcohol Intake</h2>
+        <p>If you choose to drink alcohol, do so in moderation.</p>
+        <p>Be aware of the recommended limits for your health.</p>
+
+
+    </main>
+
+    <footer class="footer">
+        &copy; 2023 NutriWise - Your Nutrition Companion
+    </footer>
+</body>
+
+</html>

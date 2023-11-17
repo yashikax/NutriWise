@@ -16,6 +16,40 @@ NUTRITIONIX_APP_ID = 'ecd1d15d'
 NUTRITIONIX_APP_KEY = '2742b9b2de10e8f1280716792f7d0ccd'
 NUTRITIONIX_USER_ID = '0'
 
+API_ID='859d49b0'
+API_KEY='f99e1d1c544ef879801c576b472c74d3'
+
+def fetch_recipe(ingredients):
+    base_url = 'https://api.edamam.com/search'
+    params = {
+        'q': ','.join(ingredients),
+        'app_id': API_ID,
+        'app_key': API_KEY,
+    }
+    response = requests.get(base_url, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        if 'hits' in data:
+            recipes = data['hits']
+            if recipes:
+                return recipes
+            else:
+                return "I couldn't find any recipes with those ingredients."
+        else:
+            return "Sorry, I encountered an issue with the recipe database."
+    else:
+        return "Sorry, I couldn't connect to the recipe database. Please try again later."
+
+def display_recipe(recipes, index):
+    selected_recipe = recipes[index - 1]['recipe']
+    recipe_info = f"Recipe: {selected_recipe['label']}\n"
+    recipe_info += f"URL: {selected_recipe['url']}\n"
+    recipe_info += "Ingredients:\n"
+    for ingredient in selected_recipe['ingredientLines']:
+        recipe_info += f"- {ingredient}\n"
+    return recipe_info
+
 def get_exercise_info_natural_language(natural_language_text, gender, weight_kg, height_cm, age):
     url = 'https://trackapi.nutritionix.com/v2/natural/exercise'
 
@@ -113,6 +147,12 @@ def get_nutrition_info(food_name, category):
             'nf_protein': nutrition_info.get('nf_protein', 'N/A'),
             'nf_total_carbohydrate': nutrition_info.get('nf_total_carbohydrate', 'N/A'),
             'nf_total_fat': nutrition_info.get('nf_total_fat', 'N/A'),
+            'nf_saturated_fat': nutrition_info.get('nf_saturated_fat', 'N/A'),
+            'nf_cholesterol': nutrition_info.get('nf_cholesterol', 'N/A'),
+            'nf_sodium': nutrition_info.get('nf_sodium', 'N/A'),
+            'nf_dietary_fiber': nutrition_info.get('nf_dietary_fiber', 'N/A'),
+            'nf_sugars': nutrition_info.get('nf_sugars', 'N/A'),
+            'nf_potassium': nutrition_info.get('nf_potassium', 'N/A'),
         }
         #return data.get('foods', [{}])[0]  # Return the first food item or an empty dictionary
     except requests.exceptions.HTTPError as errh:
@@ -129,6 +169,12 @@ def get_nutrition_info(food_name, category):
         'nf_protein': 'N/A',
         'nf_total_carbohydrate': 'N/A',
         'nf_total_fat': 'N/A',
+        'nf_saturated_fat': 'N/A',
+        'nf_cholesterol': 'N/A',
+        'nf_sodium': 'N/A',
+        'nf_dietary_fiber':'N/A',
+        'nf_sugars': 'N/A',
+        'nf_potassium': 'N/A',
     }
 
 def get_nutrition_info_natural_language(natural_language_text):
@@ -156,6 +202,12 @@ def get_nutrition_info_natural_language(natural_language_text):
             'nf_protein': nutrition_info.get('nf_protein', 'N/A'),
             'nf_total_carbohydrate': nutrition_info.get('nf_total_carbohydrate', 'N/A'),
             'nf_total_fat': nutrition_info.get('nf_total_fat', 'N/A'),
+            'nf_saturated_fat': nutrition_info.get('nf_saturated_fat', 'N/A'),
+            'nf_cholesterol': nutrition_info.get('nf_cholesterol', 'N/A'),
+            'nf_sodium': nutrition_info.get('nf_sodium', 'N/A'),
+            'nf_dietary_fiber': nutrition_info.get('nf_dietary_fiber', 'N/A'),
+            'nf_sugars': nutrition_info.get('nf_sugars', 'N/A'),
+            'nf_potassium': nutrition_info.get('nf_potassium', 'N/A'),
         }
     except requests.exceptions.HTTPError as errh:
         print("HTTP Error:", errh)
@@ -171,6 +223,12 @@ def get_nutrition_info_natural_language(natural_language_text):
         'nf_protein': 'N/A',
         'nf_total_carbohydrate': 'N/A',
         'nf_total_fat': 'N/A',
+        'nf_saturated_fat': 'N/A',
+        'nf_cholesterol': 'N/A',
+        'nf_sodium': 'N/A',
+        'nf_dietary_fiber':'N/A',
+        'nf_sugars': 'N/A',
+        'nf_potassium': 'N/A',
     }
 
 class User(db.Model):
@@ -197,10 +255,52 @@ def emotion_classification():
     except Exception as e:
         print(str(e))
         return jsonify({'error': str(e)})
+    
+@app.route('/get_recipe', methods=['POST'])
+def get_recipe():
+    ingredients = request.form.get('ingredients')
+    
+    if not ingredients:
+        return "Please provide ingredients in the form."
+
+    recipes = fetch_recipe(ingredients.split(','))
+    selected_recipe_index = None
+
+    if 'recipe_choice' in request.form:
+        selected_recipe_index = int(request.form['recipe_choice'])
+
+    return render_template('bot.html', recipes=recipes, selected_recipe_index=selected_recipe_index, ingredients=ingredients)
+
+@app.route('/recipe_details', methods=['POST'])
+def recipe_details():
+    selected_recipe_index = int(request.form['selected_recipe'])
+    ingredients = request.form.get('ingredients')
+    recipes = fetch_recipe(ingredients.split(','))
+    selected_recipe_info = display_recipe(recipes, selected_recipe_index)
+    return render_template('bot.html', recipes=recipes, selected_recipe_index=selected_recipe_index, selected_recipe_info=selected_recipe_info, ingredients=ingredients)
+
+@app.route('/bot', methods=['POST'])
+def bot_page():
+    return render_template('bot.html')
 
 @app.route('/')
 def main_page():
     return render_template('home.html')
+
+@app.route('/info')
+def info_page():
+    # Add logic to retrieve and display tips information
+    return render_template('info.html')
+
+@app.route('/tips')
+def tips_page():
+    # Add logic to retrieve and display tips information
+    return render_template('tips.html')
+
+@app.route('/alternative')
+def alternative_page():
+    # Add logic to retrieve and display tips information
+    return render_template('alternatives.html')
 
 @app.route('/view_profile')
 def view_profile():
@@ -220,6 +320,7 @@ def login_page():
             # Login successful, you can redirect to another page or perform other actions
             return redirect(url_for('home2_page'))
         else:
+            
             # Invalid login, you can display an error message
             return render_template('login.html', error="Invalid username or password")
             

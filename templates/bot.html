@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Suggetions</title>
+    <link rel="stylesheet" href="..\static\bot.css">
+</head>
+
+<body>
+    
+        <header>
+            <div class="header-container">
+                <h1>Menu Suggestions</h1>
+            </div>
+        </header>
+        
+    
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home2_page') }}">Home</a></li>
+                <li><a href="{{ url_for('view_profile') }}">View Profile</a></li>
+                <li><a href="{{ url_for('bmi_page') }}">BMI Calculator</a></li>
+                <!--<li><a href="#">Nutrient Lookup</a></li>
+                <li><a href="#">Daily Nutrient Analysis</a></li>
+                <li><a href="#">Workout Analysis</a></li>
+                <li><a href="#">Mood Tracker</a></li>-->
+                <li><a href="{{ url_for('tips_page') }}">Health Tips</a></li>
+                <li><a href="{{ url_for('alternative_page') }}">Food Alternatives</a></li>
+                <!--<li><a href="#">Contact</a></li>-->
+            </ul>
+        </nav>
+    <div>
+        
+        <form action="/get_recipe" method="post">
+            <label for="ingredients">Enter ingredients (comma-separated)</label>
+            <input type="text" name="ingredients" id="ingredients" required>
+            <button type="submit">Get Recipes</button>
+        </form>
+
+        {% if selected_recipe_index is defined and selected_recipe_index is not none %}
+            <h2>Recipe Details</h2>
+            <pre>{{ selected_recipe_info }}</pre>
+        {% else %}
+            <h2>Recipes</h2>
+            <form action="/recipe_details" method="post">
+                <label for="selected_recipe">Select a recipe</label>
+                <select name="selected_recipe" id="selected_recipe">
+                    {% for recipe in recipes %}
+                        <option value="{{ loop.index }}">{{ recipe.recipe.label }}</option>
+                    {% endfor %}
+                </select>
+                <input type="hidden" name="ingredients" value="{{ ingredients }}">
+                <button type="submit">View Details</button>
+            </form>
+        {% endif %}
+    </div>
+    <footer class="footer">
+        &copy; 2023 NutriWise - Your Nutrition Companion
+    </footer>
+</body>
+
+</html>

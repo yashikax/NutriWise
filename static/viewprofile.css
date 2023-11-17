@@ -1,0 +1,150 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* Set your desired background color */
+}
+
+header {
+    background-image: url('../static/nutrition-and-health.jpg');
+   /* background-color: rgba(209, 208, 208, 0.5);*/
+    background-blend-mode: overlay;
+    background-size: cover;
+    text-align: center;
+    padding: 50px 0;
+    color: #000000;
+}
+
+.header-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Adjust the transparency as needed */
+    padding: 20px;
+    border-radius: 10px; /* Add border-radius for rounded corners */
+    max-width: 70%;
+    margin: 0 auto;
+}
+
+
+
+
+nav ul {
+    background-color: rgba(0, 0, 0, 0.8);
+    list-style: none;
+    text-align: center;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+/* Add this style to your existing CSS */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Additional styles to remove default padding/margin from list items */
+ul li {
+    margin: 0;
+    padding: 0;
+}
+
+
+nav li {
+    display: inline;
+    margin: 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+nav a:hover {
+    background-color: rgb(71, 134, 12);
+    /* Change color on hover */
+    color: #fff;
+    /* Text color on hover */
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333; /* Set your desired text color */
+}
+
+.center-box {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff; /* Set your desired background color */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Set your desired box shadow */
+}
+
+p {
+    margin: 10px 0;
+    text-align: center;
+}
+
+button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #4CAF50; /* Set your desired button background color */
+    color: #fff; /* Set your desired button text color */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049; /* Set your desired button background color on hover */
+}
+
+form {
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+    color: #333; /* Set your desired label text color */
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px;
+    box-sizing: border-box;
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 2px;
+    text-decoration: none;
+    color: #3498db; /* Set your desired link color */
+}
+
+a:hover {
+    color: #2980b9; /* Set your desired link color on hover */
+}
+
+.footer {
+    background-color: #333; /* Set your desired footer background color */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: static;
+    width: 100%;
+    bottom: 0;
+}

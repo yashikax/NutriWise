@@ -4,15 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Profile - NutriWise</title>
+    <link rel="stylesheet" href="../static/viewprofile.css">
     <!-- Add any additional styles or meta tags as needed -->
 </head>
 <body>
-    <h1>Your Profile</h1>
+    <header>
+        <div class="header-container">
+            <h1>Your Profile</h1>
+        </div>
+    </header>
+    
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home2_page') }}">Home</a></li>
+            <li><a href="{{ url_for('view_profile') }}">View Profile</a></li>
+            <li><a href="{{ url_for('bmi_page') }}">BMI Calculator</a></li>
+            <!--<li><a href="#">Nutrient Lookup</a></li>
+            <li><a href="#">Daily Nutrient Analysis</a></li>
+            <li><a href="#">Workout Analysis</a></li>
+            <li><a href="#">Mood Tracker</a></li>-->
+            <li><a href="{{ url_for('tips_page') }}">Health Tips</a></li>
+            <li><a href="{{ url_for('alternative_page') }}">Food Alternatives</a></li>
+            <!--<li><a href="#">Contact</a></li>-->
+        </ul>
+    </nav>
+    <main>
     <!-- Add logic to display user's profile information here -->
     <p>Name: {{ user.name }}</p>
     <p>Email: {{ user.email }}</p>
     <p>Username: {{user.username}} </p>
-    <p>Password: {{user.password}} </p>
+    <!--<p>Password: {{user.password}} </p>-->
     <!-- Add form to selectively update user information -->
     <button onclick="showUpdateForm()">Update Details</button>
     <div id="updateForm" style="display: none;">
@@ -24,12 +46,15 @@
             <label for="newUsername">New Username:</label>
             <input type="text" id="newUsername" name="newUsername">
             <br>
-            <label for="newPassword">New Password:</label>
+            <!--<label for="newPassword">New Password:</label>
             <input type="password" id="newPassword" name="newPassword">
-            <br>
+            <br>-->
             <button type="submit">Update Profile</button>
         </form>
     </div>
+    <a href="{{ url_for('home2_page') }}">Back to Home</a>
+
+</main>
 
     <script>
         function showUpdateForm() {
@@ -37,6 +62,10 @@
             updateForm.style.display = "block";
         }
     </script>
-    <a href="{{ url_for('home2_page') }}">Back to Home</a>
+    
+
+    <footer class="footer">
+        &copy; 2023 NutriWise - Your Nutrition Companion
+    </footer>
 </body>
 </html>

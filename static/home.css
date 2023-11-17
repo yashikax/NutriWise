@@ -31,7 +31,7 @@ h1 {
 }
 
 .p1{
-    color: rgb(190, 230, 152);
+    color: rgb(71, 134, 12);
     font-size: 30px;
     font-family: 'Dancing Script', Arial, Helvetica, sans-serif;
 }
@@ -78,20 +78,26 @@ nav a {
 
 /* Style the About Us section */
 .about-us {
+    
     background-color: #fff;
     padding: 30px;
     margin-bottom: 20px;
     text-align: center;
 }
-
+.key{
+    color: rgb(71, 134, 12);
+    font-weight: 900;
+    font-family: 'Merriweather', Arial, Helvetica, sans-serif;
+}
 .about-us h2 {
     text-align: center;
     font-size: 28px;
-    color: #000000;
+    
     margin-bottom: 20px;
 }
 
 .about-text {
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     text-align: center;
     font-size: 18px;
     color: #000000;
@@ -106,13 +112,15 @@ nav a {
 }
 
 .vision{
+    color: rgb(71, 134, 12);
+    font-family: 'Merriweather', Arial, Helvetica, sans-serif;
     text-align: center;
     font-size: 28px;
-    color: #000000;
     margin-bottom: 20px;
 }
 
 .vision-text{
+    font-family: 'Montserrat', Arial, Helvetica, sans-serif;
     text-align: center;
     font-size: 18px;
     color: #000000;
@@ -174,7 +182,7 @@ main {
 }
 /* Hover effect for the key features */
 .feature:hover {
-    background-color: rgb(190, 230, 152); /* Change to green on hover */
+    background-color: rgb(71, 134, 12); /* Change to green on hover */
     color: #fff; /* Text color on hover */
     transition: background-color 0.3s, color 0.3s; /* Smooth transition */
 }
@@ -188,12 +196,12 @@ main {
 }
 
 
-/* Style the 7th feature in the middle */
+/* Style the 7th feature in the middle 
 .feature:nth-child(7) {
-    width: 45%; /* Set a fixed width, e.g., 50% */
-    margin: 0 auto; /* Center the 7th feature horizontally */
+    width: 45%; /* Set a fixed width, e.g., 50% 
+    margin: 0 auto; /* Center the 7th feature horizontally 
     text-align: center;
-}
+}*/
 
 
 
@@ -242,5 +250,15 @@ main {
     color: #777;
 }
 nav a:hover {
-    color: rgb(190, 230, 152);
+    color: rgb(71, 134, 12);
+}
+
+.footer {
+    background-color: #333; /* Set your desired footer background color */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: static;
+    width: 100%;
+    bottom: 0;
 }

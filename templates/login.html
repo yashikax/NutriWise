@@ -10,6 +10,9 @@
 <body>
     <div class="login-container">
         <h2>Login to NutriWise</h2>
+        {% if error %}
+            <p class="error-message">{{error}}</p>
+        {% endif %}
         <form action="{{ url_for('login_page') }}" method="post">
             <!-- Username Input -->
             <label for="username">Username</label>

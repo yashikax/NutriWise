@@ -9,13 +9,23 @@
     <link rel="stylesheet" href="..\static\bmi.css">
 </head>
 <body>
+    <header>
+        <div class="header-container">
+            <h1>Calculate your BMI!</h1>
+        </div>
+    </header>
     <nav>
-        <!-- Your common navigation menu here -->
         <ul>
-            <li><a href="{{ url_for('main_page') }}">Home</a></li>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="{{ url_for('home2_page') }}">Home</a></li>
+            <li><a href="{{ url_for('view_profile') }}">View Profile</a></li>
+            <li><a href="{{ url_for('bmi_page') }}">BMI Calculator</a></li>
+            <!--<li><a href="#">Nutrient Lookup</a></li>
+            <li><a href="#">Daily Nutrient Analysis</a></li>
+            <li><a href="#">Workout Analysis</a></li>
+            <li><a href="#">Mood Tracker</a></li>-->
+            <li><a href="{{ url_for('tips_page') }}">Health Tips</a></li>
+            <li><a href="{{ url_for('alternative_page') }}">Food Alternatives</a></li>
+            <!--<li><a href="#">Contact</a></li>-->
         </ul>
     </nav>
     <main>
