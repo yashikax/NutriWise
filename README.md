@@ -1,1 +1,1 @@
-# NutriWise
+# NutriWise -Your Personalized Nutrition Companion
