@@ -3,7 +3,13 @@
 ### The application includes following features
 + BMI calculator
 + Nutritional content lookup
-+ Exercise analyzer, food natural language processing, user authentication and profile management, alternative food suggestions, recipe suggestions, mood analyzer and corresponding resipe suggetions.
++ Exercise analyzer
++ Food natural language processing
++ User authentication and profile management 
++ Alternative food suggestions
++ Realtime health tips
++ Recipe suggestions
++ Mood analyzer and corresponding resipe suggetions
 The goal is to provide users with a comprehensive tool for tracking and improving their health and fitness.
 ## API's used:
 + [NUTRITIONIX](https://www.nutritionix.com/business/api)
@@ -18,3 +24,4 @@ Requirements:
 + SQL Alchemy
 + Pycharm
 + Transformers
+
