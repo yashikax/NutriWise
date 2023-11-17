@@ -17,14 +17,15 @@ Documentation: [NUTRITIONIX API documentation](https://docs.google.com/document/
 + [EDAMAM](https://www.edamam.com/)
 Documentation: [EDAMAM API documentation](https://developer.edamam.com/edamam-docs-nutrition-api)
 
-Requirements:
+##Requirements:
 + Python
 + Flask
 + Tensorflow
 + SQL Alchemy
 + Pycharm
 + Transformers
-Installations:
+
+##Installations:
 Install python, and check for python version on command prompt to ensure that python is corrctly installed and has been correctly added to path.
 Python check version: 
 ```python --version```
