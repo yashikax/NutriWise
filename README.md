@@ -9,8 +9,8 @@
 + Alternative food suggestions
 + Realtime health tips
 + Recipe suggestions
-+ Mood analyzer and corresponding resipe suggetions
-The goal is to provide users with a comprehensive tool for tracking and improving their health and fitness.
++ Mood analyzer and corresponding recipe suggetions
+### The goal is to provide users with a comprehensive tool for tracking and improving their health and fitness.
 ## API's used:
 + [NUTRITIONIX](https://www.nutritionix.com/business/api)
 Documentation: [NUTRITIONIX API documentation](https://docs.google.com/document/d/1_q-K-ObMTZvO0qUEAxROrN3bwMujwAN25sLHwJzliK0/edit#heading=h.73n49tgew66c)
