@@ -25,3 +25,5 @@ Requirements:
 + Pycharm
 + Transformers
 
+### Nutriwise Project Report - will help you in getting to know the project better.
++ Link for [NUTRIWISE REPORT](https://docs.google.com/document/d/18zQtsFEqMVgc0tjpWX5bT8t1bDvzpmDX/edit?usp=drive_link&ouid=101026258092539715926&rtpof=true&sd=true)
